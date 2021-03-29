@@ -41,7 +41,7 @@ public class EmployeeService {
             if (type.equals("byEmpName")) {
                 example.createCriteria().andEmpNameLike("%" + keyword + "%");
             } else if (type.equals("byEmail")) {
-                example.createCriteria().andEmailLike("%" +keyword + "%");
+                example.createCriteria().andEmailLike("%" + keyword + "%");
             } else if (type.equals("byId")) {
                 example.createCriteria().andEmpIdEqualTo(Integer.parseInt(keyword));
             }
@@ -56,7 +56,9 @@ public class EmployeeService {
             throw new BusinessException(ErrorCodeEnum.REQUIRED_REQUEST_PARAM_EMPTY);
         }
         employee.setEmpId(null);
-        employeeMapper.insertSelective(employee);
+        if (employeeMapper.insertSelective(employee) != 1) {
+            throw new BusinessException(ErrorCodeEnum.SYSTEM_EXECUTION_ERROR);
+        }
     }
 
     /** 检查员工姓名是否可用, 若可用返回true, 否则返回false */
