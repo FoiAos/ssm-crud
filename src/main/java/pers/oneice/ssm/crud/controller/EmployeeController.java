@@ -73,7 +73,6 @@ public class EmployeeController {
             for (FieldError fieldError : result.getFieldErrors()) {
                 msg.add(fieldError.getField(), fieldError.getDefaultMessage());
             }
-            System.out.println(msg);
             return msg;
         } else {
             employeeService.saveEmp(employee);
@@ -101,8 +100,10 @@ public class EmployeeController {
         return Msg.success().add("emp", employee);
     }
 
-    /** 更新员工 */
-    //路径变量写成{empId}可以保证数据绑定器能正确将{empId}注入到Employee入参的empId属性中
+    /**
+     * 更新员工
+     * 路径变量写成{empId}可以保证数据绑定器能正确将{empId}注入到Employee入参的empId属性中
+     */
     @PutMapping(value = "/emps/{empId}")
     @ResponseBody
     public Msg updateEmp(Employee employee) {

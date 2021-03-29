@@ -38,12 +38,16 @@ public class EmployeeService {
         PageHelper.startPage(page, rows);
         EmployeeExample example = new EmployeeExample();
         if (StringUtils.hasLength(type) && StringUtils.hasLength(keyword)) {
-            if (type.equals("byEmpName")) {
-                example.createCriteria().andEmpNameLike("%" + keyword + "%");
-            } else if (type.equals("byEmail")) {
-                example.createCriteria().andEmailLike("%" + keyword + "%");
-            } else if (type.equals("byId")) {
-                example.createCriteria().andEmpIdEqualTo(Integer.parseInt(keyword));
+            switch (type) {
+                case "byEmpName":
+                    example.createCriteria().andEmpNameLike("%" + keyword + "%");
+                    break;
+                case "byEmail":
+                    example.createCriteria().andEmailLike("%" + keyword + "%");
+                    break;
+                case "byId":
+                    example.createCriteria().andEmpIdEqualTo(Integer.parseInt(keyword));
+                    break;
             }
         }
         List<Employee> emps = employeeMapper.queryByExampleWithDept(example);
